@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="boundary.css">
+<!-- 	<script src = "stud.js"></script> -->
+	<title>Student Assignment Submission System</title>
+</head>
+<body>
+<div class="header">
+	<h1 class="title">
+    <span class="capital">S</span><span class="remain">tudent</span>
+    <span class="capital">A</span><span class="remain">ssignment</span>
+    <span class="capital">S</span><span class="remain">ubmission</span>
+    <span class="capital">S</span><span class="remain">ystem</span>
+	</h1>
+</div>
+<div class="navibar">
+    	<input type="button" class = "buttonInNavi" onclick="location.href='login.html';" value="LOGOUT" />
+</div>
+<div align="center" >
+    <h1 class="remain" id="assignmentId">
+        
+	</h1>
+</div>
+<div id="content">
+
+</div>
+<div class="foot" align="buttom"><p>Copyright © 2016 Student Assignment Submission System<br> Implemented by: GUO Honghao; Li Shiying; Sun Jingxuan; XU Jinyuzi</p></div>
+
+<script type="text/javascript">
+  var tid = document.cookie.split(";")[0].split("=")[1];
+  var courseId = document.cookie.split(";")[1].split("=")[1];
+  var assignmentId = document.cookie.split(";")[2].split("=")[1];
+  var currentAssignment = document.getElementById("assignmentId");
+  var assignmentDetail = new Array();
+  var tableContent = document.getElementById("content");
+  var min = 10000;
+  var max = 0;
+  var average = 0;
+  
+  function getAssignmentDetail() {
+    // get the list of student, submissions, and saved scores of the assignment. Return 2D array in the format of [[student, submission, score],[student, submission, score]...]
+  }
+  
+  function setAssignmentDetail(assignmentDetail) {
+    // save the 2D array (with updated score) back to database
+  }
+  
+  function setAssignmentStatistics(min, max, average) {
+    // save the three numbers to database
+  }
+  
+  currentAssignment.innerHTML = assignmentId ;
+  assignmentDetail = getAssignmentDetail();
+  // For test
+    assignmentDetail = [["stu1","abcd.pdf",,],["stu2","abcd.jpg",50]];
+  var content = "<table align='center'>\n<tr><td align='left'>Student</td><td align='center'>Submission</td><td align='right'>Score</td></tr>\n";
+  for (var i in assignmentDetail) {
+    if (!assignmentDetail[i][2]) {
+	  content = content + "<tr><td>" + assignmentDetail[i][0] + "</td><td>" + assignmentDetail[i][1] + "</td><td><input type='text' id='" + i + "'></td></tr>\n";
+	} else {
+	  content = content + "<tr><td>" + assignmentDetail[i][0] + "</td><td>" + assignmentDetail[i][1] + "</td><td><input type='text' value='" + assignmentDetail[i][2] + "' id='" + i + "'></td></tr>\n";
+	}
+  }
+  content = content + "<tr id='statistics'><td></br></td></tr>\n<tr><td align='left'><input type='button' onclick=\"location.href='mainPageTeacher.html';\" value='cancel' /></td><td align='center'><input type='button' value='save' onclick='saveUpdate()'/></td><td align='right'><input type='button' value='finish' onclick='finishAssignment()'/></td></tr>\n</table>";
+  tableContent.innerHTML = content ;
+  
+  var assignmentStatistics = document.getElementById("statistics");
+  
+  function saveUpdate() {
+    for (var i in assignmentDetail) {
+	  var thisScore = document.getElementById(i).value;
+	  if ((isNaN(thisScore))||(!thisScore)) {
+	    assignmentDetail[i][2] = null;
+	  } else {
+	    assignmentDetail[i][2] = Number(thisScore);
+	  }
+	}
+	setAssignmentDetail(assignmentDetail);
+  }
+  
+  function finishAssignment() {
+    min = 10000;
+    max = 0;
+    average = 0;
+    for (var i in assignmentDetail) {
+	  var thisScore = document.getElementById(i).value;
+	  if ((isNaN(thisScore))||(!thisScore)) {
+	    assignmentDetail[i][2] = 0;
+	  } else {
+	    assignmentDetail[i][2] = Number(thisScore);
+	  }
+	  if (min > assignmentDetail[i][2]) {
+	    min = assignmentDetail[i][2];
+	  }
+	  if (max < assignmentDetail[i][2]) {
+	    max = assignmentDetail[i][2];
+	  }
+	  average = average + assignmentDetail[i][2];
+	}
+	average = average / assignmentDetail.length;
+	setAssignmentDetail(assignmentDetail);
+	setAssignmentStatistics(min, max, average);
+	statisticsContent = "<td align='center'>min:" + min + "</td><td align='center'>max:" + max + "</td><td align='center'>average:" + average + "</td>";	
+	assignmentStatistics.innerHTML = statisticsContent;
+  }
+  
+</script>

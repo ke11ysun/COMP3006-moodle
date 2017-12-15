@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="boundary.css">
+<!-- 	<script src = "stud.js"></script> -->
+	<title>Student Assignment Submission System</title>
+</head>
+<body>
+<div class="header">
+	<h1 class="title">
+    <span class="capital">S</span><span class="remain">tudent</span>
+    <span class="capital">A</span><span class="remain">ssignment</span>
+    <span class="capital">S</span><span class="remain">ubmission</span>
+    <span class="capital">S</span><span class="remain">ystem</span>
+	</h1>
+</div>
+<div class="navibar">
+    	<input type="button" class = "buttonInNavi" onclick="location.href='login.html';" value="LOGOUT" />
+</div>
+<div>
+    <table>
+    <tr><td>Assignment Name</td><td><input type='text' id='assName' /></td></tr>
+	<tr><td>Due Date (YYYY-MM-DD hh:mm)</td><td><input type="text" id="dueDate"/></td></tr>
+	<tr><td>Description File</td><td><input type="file" id="descriptionFile"/></td></tr>
+	<tr><td><input type='button' onclick="location.href='mainPageTeacher.html';" value='cancel' /></td><td><input type='button' value='submit' onclick="setAssignment()"/></td></tr>
+	</table>
+</div>
+<div id = "alert" style="margin-top:20px"></div>
+<div class="foot" align="buttom"><p>Copyright © 2016 Student Assignment Submission System<br> Implemented by: GUO Honghao; Li Shiying; Sun Jingxuan; XU Jinyuzi</p></div>
+
+<script type="text/javascript">
+  var tid = document.cookie.split(";")[0].split("=")[1];
+  var courseId = document.cookie.split(";")[1].split("=")[1];
+  var assignmentName;
+  var dueDate;
+  var descriptionFile;
+  
+  function setAssignment()
+  {
+    assignmentName = document.getElementById('assName').value;
+	dueDate = document.getElementById('dueDate').value;
+	descriptionFile = document.getElementById('descriptionFile').value;
+    if (!assignmentName) {
+	  document.getElementById('alert').innerHTML = '<p class = "alertMessage">Input Assignment Name Please!</p>';
+	} else if (!dueDate) {
+	  document.getElementById('alert').innerHTML = '<p class = "alertMessage">Input Due Date Please!</p>';
+	} else {
+	  // save assignmentName, dueDate, descriptionFile to database under courseId
+	  window.alert("Assignment Released!");
+	  window.location = "mainPageTeacher.html";
+	}
+  }
+  
+</script>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="boundary.css">
+<!-- 	<script src = "stud.js"></script> -->
+	<title>Student Assignment Submission System</title>
+</head>
+<body>
+<div class="header">
+	<h1 class="title">
+    <span class="capital">S</span><span class="remain">tudent</span>
+    <span class="capital">A</span><span class="remain">ssignment</span>
+    <span class="capital">S</span><span class="remain">ubmission</span>
+    <span class="capital">S</span><span class="remain">ystem</span>
+	</h1>
+</div>
+<div class="navibar">
+    	<input type="button" class = "buttonInNavi" onclick="location.href='login.html';" value="LOGOUT" />
+</div>
+<div class="bar"></div>
+<div class="master" id="master">
+<h4 class="leftTitle">Course List</h4>
+    <div id="courseList">
+	
+	</div>
+</div>
+<div class="detail" id = "detail">
+
+</div>
+<div class="foot" align="buttom"><p>Copyright © 2016 Student Assignment Submission System<br> Implemented by: GUO Honghao; Li Shiying; Sun Jingxuan; XU Jinyuzi</p></div>
+
+<script type="text/javascript">
+
+  function getCourseList(tid) {
+    // Query the database for the list of the courses taught by the teacher, with the teacher's id provided. Return an array of courses(strings)
+  }
+  
+  function getAssignmentList(courseId) {
+    // Query the database for the list of the assignments of a course, with the course's id provided. Return an array of assignments(strings)
+  }
+  
+  function selectCourse(courseId) {
+    assignmentArray = getAssignmentList(courseId);
+	document.cookie = "courseId=" + courseId;
+//	test
+	assignmentArray = ["ass1", "ass2", "ass3"];
+	document.getElementById(courseId).className = "courseSelected";
+	for (var i in courseArray) {
+	  if (courseArray[i] != courseId) {
+	    document.getElementById(courseArray[i]).className = "courseUnselected";
+	  }
+    }
+	detailContent = "<input type=\"button\" class = \"button2\" onclick=\"location.href='newAssignment.html';\" value=\"New Assignment\" />";
+	for (var i in assignmentArray) {
+      detailContent = detailContent + "<p onclick=\"selectAssignment('" + assignmentArray[i] + "')\">" + assignmentArray[i] + "</p>\n";
+    }
+	assignmentList.innerHTML = detailContent;
+  }
+  
+  function selectAssignment(assignmentId) {
+    document.cookie = "assignmentId=" + assignmentId;
+    location.href='assignmentDetail.html';
+  }
+  
+  var tid = document.cookie.split(";")[0].split("=")[1];
+  var courseArray = new Array();
+  var assignmentArray = new Array();
+  var detailContent = "";
+  var assignmentList = document.getElementById("detail");
+  courseArray = getCourseList(tid);
+  
+//  For test use only
+  courseArray = ["COMP3005", "COMP3006", "COMP2018"];
+  
+  var courseList = document.getElementById("courseList");
+  var content = "";
+  for (var i in courseArray) {
+    content = content + "<p id=\"" + courseArray[i] + "\" class=\"courseUnselected\" onclick=\"selectCourse('" + courseArray[i] + "')\">" + courseArray[i] + "</p>\n";
+  }
+  courseList.innerHTML = content ;
+
+</script>
+</body>
+</html>

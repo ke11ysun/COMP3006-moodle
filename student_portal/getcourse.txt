@@ -1,0 +1,23 @@
+
+	function getCourseList(sid){
+	var list;
+		$.ajax({
+		url : 'test.php',
+		type : 'post',
+		async: false,
+		data : {sid:sid,flag:"C"},
+		success : function(data){
+			list = data;
+		},
+		fail:function(){
+			alert("failed");
+		}
+	});
+	var parsed = JSON.parse(list);
+	var arr = [];
+	for(var x in parsed){
+		arr.push(parsed[x]);}
+		arr.pop();
+		console.log(arr);
+	return arr;
+	}

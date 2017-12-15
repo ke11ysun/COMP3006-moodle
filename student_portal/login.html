@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="boundary.css">
+	<script src = "general.js"></script>
+	<script src = "jquery-3.1.1.min.js"></script>
+	<title>Student Assignment Submission System</title>
+</head>
+<body>
+<div class="header">
+	<h1 class="title">
+    <span class="capital">S</span><span class="remain">tudent</span>
+    <span class="capital">A</span><span class="remain">ssignment</span>
+    <span class="capital">S</span><span class="remain">ubmission</span>
+    <span class="capital">S</span><span class="remain">ystem</span>
+	</h1>
+</div>
+<div class="navibar"></div>
+
+<div class="chain"></div>
+
+<div class="loginDiv">
+	<div align="center" class="loginArea">
+    	<label><b>Username: </b></label>
+    	<input type="text" placeholder="Enter Username" id="uname"><br>
+	</div>
+	<div align="center" class="loginArea">
+        <label><b>Password: </b></label>
+    	<input type="password" placeholder="Enter Password" id="psw">
+	</div>
+    <div align="center" class="loginArea">
+    <button type="button" onclick="login()" class="button1">Log in</button>
+    </div>
+</div>
+<div id = "alert" style="margin-top:20px"></div>
+
+
+
+
+<script type="text/javascript">
+	showTimeOut();
+
+	function login(){
+		var uname = document.getElementById('uname');
+		var psw = document.getElementById('psw');
+		
+		if(!uname.value){
+			document.getElementById('alert').innerHTML = '<p class = "alertMessage">Input USERNAME Please!</p>';
+			uname.focus();
+			return;
+		}
+		else if(!psw.value){
+			document.getElementById('alert').innerHTML = '<p class = "alertMessage">Input PASSWORD Please!</p>';
+			psw.focus();
+			return;
+		}
+		validate(uname.value,psw.value);
+		
+	}
+	
+	function validate(uname,psw){
+		document.getElementById('alert').innerHTML = '<p class = "alertMessage">Logging in......</p>';
+		$.post('test.php',{uname:uname,psw:psw,flag:'V'},function(callback){
+			console.log("hey");
+    		if(callback.status==1){
+				setCookie(COOKIENAME,uname,time);
+				window.location = "mainPageStudent.php";
+				return;
+    		}else if(callback.status==2){
+        		window.location = "";
+        		return;
+    		}
+    		else if(callback.status == 3){
+    			document.getElementById('alert').innerHTML = '<p class = "alertMessage">Invalid login, please try again</p>';
+    			return;
+    		}
+    		document.getElementById('alert').innerHTML = '<p class = "alertMessage">Error....</p>';
+    	},'json');
+	}
+
+	function showTimeOut(){
+		if(getCookie(COOKIEFORTIMEOUT))
+			document.getElementById('alert').innerHTML = '<p class = "alertMessage">Times Out, Login Again!</p>';
+	}
+
+</script>
+
+</body>
+</html>

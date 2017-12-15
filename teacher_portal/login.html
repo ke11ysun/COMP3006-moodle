@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<script type="text/javascript">
+
+	function login(){
+		var uname = document.getElementById('uname');
+		var psw = document.getElementById('psw');
+		if(!uname.value){
+			document.getElementById('alert').innerHTML = '<p class = "alertMessage">Input USERNAME Please!</p>';
+			uname.focus();
+			return;
+		}
+		else if(!psw.value){
+			document.getElementById('alert').innerHTML = '<p class = "alertMessage">Input PASSWORD Please!</p>';
+			psw.focus();
+			return;
+		}
+		switch (validate(uname.value,psw.value)){
+				// implement verify function, query the (uname,psw) pair in database, 
+				// if error or invalid log in : return 0; 
+				// if student id : return 1; 
+				// if staff id : return 2;
+			case 1:
+			    document.cookie = "sid=" + uname.value;
+				window.location = "mainPageStudent.html";break;
+			case 2:
+			    document.cookie = "tid=" + uname.value;
+				window.location = "mainPageTeacher.html";break;
+			case 0: 
+				var temp = 
+				document.getElementById('alert').innerHTML = '<p class = "alertMessage">Invalid login, please try again</p>';
+				break;
+		}
+	}
+	
+	function validate(uname,psw){
+
+	}
+
+</script>
+
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="boundary.css">
+<!-- 	<script src = "stud.js"></script> -->
+	<title>Student Assignment Submission System</title>
+</head>
+<body>
+<div class="header">
+	<h1 class="title">
+    <span class="capital">S</span><span class="remain">tudent</span>
+    <span class="capital">A</span><span class="remain">ssignment</span>
+    <span class="capital">S</span><span class="remain">ubmission</span>
+    <span class="capital">S</span><span class="remain">ystem</span>
+	</h1>
+</div>
+<div class="navibar"></div>
+
+<div class="chain"></div>
+
+<div class="loginDiv">
+	<div align="center" class="loginArea">
+    	<label><b>Username: </b></label>
+    	<input type="text" placeholder="Enter Username" id="uname"><br>
+	</div>
+	<div align="center" class="loginArea">
+        <label><b>Password: </b></label>
+    	<input type="password" placeholder="Enter Password" id="psw">
+	</div>
+    <div align="center" class="loginArea"><button type="button" onclick="login()" class="button1">Log in</button></div>
+</div> 
+<div id = "alert" style="margin-top:20px"></div>
+<div class="foot" align="buttom"><p>Copyright © 2016 Student Assignment Submission System<br> Implemented by: GUO Honghao; Li Shiying; Sun Jingxuan; XU Jinyuzi</p></div>
+
+</body>
+</html>

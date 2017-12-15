@@ -1,0 +1,214 @@
+
+//modifed to automatically generate aid, did 
+//modified to automatically update SUBMISSION table when new assignment created
+//corrected sql syntax error
+//changed PDO back to mysql functions because of print array issues
+
+
+
+
+//mainPageTeacher.html
+
+function getCourseList(tid){
+<?php
+if(isset($_GET['tid']))
+	{
+		$tid = $_GET['tid'];
+	}
+//$dbh = new PDO("mysql:host=localhost;dbname=dgroup2”, "dgroup2”, "123456");
+MYSQL_CONNECT('localhost','dgroup2','123456') OR DIE ("Bye Bye");
+@mysql_select_db("dgroup2") OR DIE ("Bye bye bye");
+
+$cresult = mysql_query("select C.CNAME from COURSE C where C.CID = CID not in
+	(select T.CID from TEACHER_COURSE T where T.TID = \"$tid\")");
+$cname = array();
+$i = 0;
+while($row = mysql_fetch_array($cresult)){
+	$cname[i] = $row['CNAME'];
+	$i++;
+}
+echo 'var cname = ' . json_encode($cname) . ';';
+mysql_close();
+?>
+//use the string array "cname" to display course list
+}
+
+
+
+function getAssignmentList(courseId){
+<?php
+if(isset($_GET['courseId']))
+	{
+		$cid = $_GET['courseId'];
+	}
+//$dbh = new PDO("mysql:host=localhost;dbname=dgroup2”, "dgroup2”, "123456");
+MYSQL_CONNECT('localhost','dgroup2','123456') OR DIE ("Bye Bye");
+@mysql_select_db("dgroup2") OR DIE ("Bye bye bye");
+$aresult = mysql_query("select A.AID, A.A_FILENAME from ASSIGNMENT A where A.AID = AID not in
+(select C.AID from COURSE_ASSIGNMENT C where C.CID = \"$cid\")");
+$a_filename = array();
+$i = 0;
+while($row = mysql_fetch_array($a_filename)){
+	$a_filename[i] = $row['A_FILENAME'];
+	$i++;
+}
+echo 'var a_filename = ' . json_encode($a_filename) . ';';
+mysql_close();
+?>
+//use the string array "a_filename" to display assignment list
+}
+
+
+
+
+
+//assignmentDetail.html
+
+function getAssignmentDetail(){
+<?php
+
+//$dbh = new PDO("mysql:host=localhost;dbname=dgroup2”, "dgroup2”, "123456");
+MYSQL_CONNECT('localhost','dgroup2','123456') OR DIE ("Bye Bye");
+@mysql_select_db("dgroup2") OR DIE ("Bye bye bye");
+$aresult = mysql_query("select D.SID, D.DID, D.SCORE from SUBMISSION D where D.DID = DID not in
+	(select R.DID from ASSIGNMENT_SUBMISSION R where R.AID = 
+		(select A.AID from ASSIGNMENT A))");
+		$a_detail = array[];
+		$i = 0;
+		while($row = mysql_fetch_array($a_fetail)){
+			$a_detail[i]['a_score'] = $row['SCORE'] ; 
+			$a_detail[i]['a_sid'] = $row['SID'];
+			$a_detail[i]['a_did']= $row['DID'];
+			//if needed, select student detail and submission detail
+			$i++;
+		}
+echo 'var a_detail = ' . json_encode($a_detail) . ';';	
+mysql_close();	
+?>
+//use 2D array "a_detail"
+}
+
+
+function setAssignmentDetail(assignmentDetail){
+<?php
+if(isset($_GET['assignmentDetail'])&&isset($_GET['a_filename']))
+	{
+		$a_detail = $_GET['assignmentDetail'];
+	}
+try{
+$dbh = new PDO("mysql:host=localhost;dbname=dgroup2”, "dgroup2”, "123456");
+$newscore = $a_detail['a_score'];
+$did = $a_detail['a_did'];
+$stmt = $dbh->prepare("update SUBMISSION set SCORE = \"$newscore\" where DID = \"$did\"");
+$stmt->execute();
+echo $stmt->rowCount() . "score updated successfully."; 
+}
+catch(PDOException $e){
+	echo $e.getMessage();
+}
+$dbh = null;
+?>
+}
+
+
+function setAssignmentStatistics(min, max, average){//need to pass a_filename 
+<?php
+if(isset($_GET['min'])&&isset($_GET['max'])&&isset($_GET['average']))
+	{
+		$min = $_GET['min'];
+		$max = $_GET['max'];
+		$average = $_GET['average'];
+	}
+	try{
+	$dbh = new PDO("mysql:host=localhost;dbname=dgroup2”, "dgroup2”, "123456");
+	$stmt = $dbh->prepare("update ASSIGNMENT set MIN = \"$min\" where A_FILENAME = \"$a_filename\"");
+	$stmt->execute();
+	$stmt = $dbh->prepare("update ASSIGNMENT set MAX = \"$max\" where A_FILENAME = \"$aid\"");
+	$stmt->execute();
+	$stmt = $dbh->prepare("update ASSIGNMENT set MEAN = \"$average\" where AID = \"$a_filename\"");
+	$stmt->execute();
+	echo $stmt->rowCount() . "score updated successfully."; 
+	}
+	catch(PDOException $e){
+		echo $e.getMessage();
+	}
+	$dbh = null;	
+?>
+}
+
+
+function setAssignment(){//need to pass cname,releaseDate
+//......
+//inside else
+
+<?php
+if(isset($_GET['assignmentName'])&&isset($_GET['dueDate'])&&isset($_GET['descriptionFile'])&&isset($_GET['releaseDate']))
+	{
+		$a_filename = $_GET['descriptionFile'];
+		//we set the uploaded filename as the assignment name in the db
+		$dueDate = $_GET['dueDate'];
+		$releaseDate = $_GET['releaseDate'];
+		$cname = $_GET['cname']
+	}
+	try{
+	//$dbh = new PDO("mysql:host=localhost;dbname=dgroup2”, "dgroup2”, "123456");
+	MYSQL_CONNECT('localhost','dgroup2','123456') OR DIE ("Bye Bye");
+	@mysql_select_db("dgroup2") OR DIE ("Bye bye bye");
+	
+//create new assignment and insert into ASSIGNMENT table
+	$empty = mysql_query("select * from ASSIGNMENT");
+	$cid = mysql_query("select CID from COURSE_ASSIGNMENT where CNAME = \"cname\"");
+	if($empty) {
+		$aid = $cid . "_0"
+	}
+	
+	$preaid = mysql_query("select MAX(AID) from ASSIGNMENT");//can we compare string value like this?
+	$prenum = explode("_", $preaid);
+	$aid = $cid . "_" . $prenum[1];
+		
+	$file_in = fopen("$a_filename","rb") || die("Cannot open input file.<br>\n");
+	$a_file = fread($file_in,filesize("$a_filename"));
+	mysql_query("insert into ASSIGNMENT values(\"$aid\", \"$releaseDate\", \"$dueDate\", \"$a_filename\", \"$afile\", null, null, null)");
+	
+	
+	
+	
+//automatically create several submissions in SUBMISSION table
+$sidlist = mysql_query("select S.SID from STUDENT_COURSE S where S.CID = CID not in (select C.CID from COURSE C where C.CID = (select A.CID from COURSE_ASSIGNMENT A where A.A_FILENAME = \"$a_filename\"))");
+
+$scale = pow(10, $decimals);
+for($i = 0; $i < count($sidlist); $i++){
+	$did = strval(mt_rand($min * $scale, $max * $scale) / $scale); //randomly generated did
+	mysql_query("insert into SUBMISSION values (\"$did\", null, null, null, null, \"$sidlist[i]\")");
+}
+	
+}catch(PDOException $e){
+	echo $e->getMessage();
+}
+mysql_close();
+?>
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

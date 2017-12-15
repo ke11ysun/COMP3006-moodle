@@ -1,0 +1,286 @@
+:root {
+  --red: #FF6A3A;
+  --blue: #01321D;
+  --grey: #333;
+  --yellow: #FFF9B1;
+  --brown: #32251A;
+  --green: #4CAF50;
+}
+
+.header {
+	/*general*/
+	width: 100%;
+	height: 100px;
+}
+
+.alertMessage { 
+	/* in log in page*/
+	margin: auto;
+	text-align: center;
+	color : var(--red);
+	font-size: 40px;
+
+}
+
+.button1 {
+	/*in login page*/
+	font-size: 30px;
+	background-color: var(--brown);
+	border-radius: 4px;
+	color: white;
+	border: none;
+}
+
+.loginArea {
+	margin: 5px;
+	padding: 5px;
+	font-size: 30px;
+}
+
+.loginDiv {
+	box-shadow: 10px 20px 10px #888888;
+	padding: 30px;
+	margin: auto;
+	height: 140px;
+	border-radius: 20px;
+	border: solid 10px var(--brown);
+	background-color: var(--yellow);
+	width: 35%;
+	color: var(--brown);
+}
+
+.chain {
+	margin: auto;
+	width: 30%;
+	height: 150px;
+	border-style: dotted;
+	border-color: var(--brown);
+	border-width: 0px 10px 0px 10px;
+
+}
+
+.capital {
+	/*G*/
+	color: var(--red);
+}
+.remain {
+	/*G*/
+	color: var(--grey);
+}
+
+.navibar {
+	/*G*/
+	margin-top: 20px;
+	background-color: var(--grey);
+/*	width: 100%;*/
+	height: 40px;
+}
+
+
+.buttonInNavi:hover {
+	/*G*/
+    background-color: var(--red); 
+    color: white;
+}
+
+.buttonInNavi {
+	/*G*/
+	position: absolute; right: 0;
+	width: 100px;
+	height: 40px;
+	background-color: Transparent;
+    border: none;
+    color: white;
+    padding: auto;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+}
+
+.buttonInNavi2:hover {
+	/*G*/
+    background-color: var(--red); 
+    color: white;
+}
+
+.buttonInNavi2 {
+	/*G*/
+	width: 100px;
+	height: 40px;
+	background-color: Transparent;
+    border: none;
+    color: white;
+    padding: auto;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+}
+
+
+
+.title {
+  /*G*/
+  padding-left: 20px;
+  position: absolute;
+  font-size: 40px;
+  top:60px;
+  text-align: center;
+}
+
+h1,span {
+	margin: auto;
+}
+html{
+	margin: auto;
+	height: 100%;
+}
+body {
+	margin:auto;
+}
+
+/* in student view*/
+
+.master {
+	margin-right: 20px;
+	margin-top:40px;
+	padding: 10px;
+	float:right;
+	width: 20%;
+	height:100%;
+	border-radius: 10px;
+	border-style: solid;
+	border-width: 3px;
+	border-color: var(--brown);
+	box-shadow: 10px 10px 10px #888888;
+}
+
+.detail {
+	margin: 1%;
+	padding: 1%;
+	border-left-style: solid;
+	border-left-width: 1px;
+	border-left-color: grey;
+	float:right;
+	width: 68%;
+	height:100%;
+}
+
+.leftTitle {
+	border-radius: 20px;
+	margin:0 auto;
+	font-size: 30px;
+	text-align: center;
+	background-color: var(--red);
+	color: white;
+}
+
+.courseSelected {
+	height: 40px;
+	width: 100%;
+	border:none;
+	border-left-color: var(--red);
+	border-left-width: 5px;
+	border-left-style: solid;
+	background-color: white;
+	font-size: 20px;
+	color: var(--red);
+	border-bottom: 1px solid grey;
+}
+
+.courseSelected:hover{
+	background-color: var(--red);
+	color:white;
+}
+
+.courseUnselected:hover{
+	background-color: var(--red);
+	margin: 0 auto;
+	color:white;
+}
+
+.courseUnselected {
+	height: 40px;
+	border:none;
+	background-color: white;
+	width: 100%;
+	border-left-color: white;
+	border-left-width: 5px;
+	border-left-style: solid;
+	font-size: 20px;
+	color: grey;
+	border-bottom: 1px solid grey;
+}
+
+.assign {
+	border-radius: 20px;
+	margin-bottom: 40px;
+	height: 150px;
+	border: solid 2px grey;
+	background-color: white;
+	width: 100%;
+	font-size: 60px;
+	color: grey;
+}
+
+.assign:hover {
+	color: var(--red);
+}
+
+::-webkit-file-upload-button {
+  background: var(--green);
+  color: white;
+  border:none;
+  border-radius: 5px;
+  padding: 1em;
+}
+
+.button2 {
+  margin:0 auto;
+  margin-top: 20px;
+  height:40px;
+  font-family: Arial Black;
+  font-size: 30px;
+  background: var(--green);
+  color: white;
+  border:none;
+  border-radius: 5px;
+}
+
+.dropContainer {
+	width: 95%;
+	height:150px;
+	margin:0 auto;
+	outline-style: dotted;
+	outline-width: 10px;
+	outline-color: grey; 
+	text-align: center;
+	font-family: Arial Black;
+	font-size: 40px;
+	color:var(--blue);
+/*	margin-top: 20px;
+	margin-bottom: 20px; */
+}
+
+table {
+	width: 95%;
+	margin: auto;
+	font-size: 20px;
+}
+tr:nth-child(even) {background-color: #f2f2f2}
+
+col {
+    display: table-column;
+}
+
+.leftCol {
+	font-family: Arial Black;
+	width: 30%;
+	height: 40px;
+	color: var(--blue);
+}
+
+.rightCol {
+
+}
